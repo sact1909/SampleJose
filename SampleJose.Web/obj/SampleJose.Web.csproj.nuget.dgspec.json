@@ -1,0 +1,208 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Web\\SampleJose.Web.csproj": {}
+  },
+  "projects": {
+    "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Module.Web\\SampleJose.Module.Web.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Module.Web\\SampleJose.Module.Web.csproj",
+        "projectName": "SampleJose.Module.Web",
+        "projectPath": "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Module.Web\\SampleJose.Module.Web.csproj",
+        "packagesPath": "C:\\Users\\steve\\.nuget\\packages\\",
+        "outputPath": "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Module.Web\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "UsingMicrosoftNETSdk": false,
+        "fallbackFolders": [
+          "C:\\Program Files\\DevExpress 22.1\\Components\\Offline Packages",
+          "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages",
+          "C:\\Program Files\\DevExpress 24.2\\Components\\Offline Packages",
+          "C:\\Program Files\\DevExpress 25.1\\Components\\Offline Packages",
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\steve\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.1.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.1.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 24.2.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 25.1.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net481"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\DevExpress 22.1\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files\\DevExpress 23.1\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files\\DevExpress 24.2\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files\\DevExpress 25.1\\Components\\System\\Components\\Packages": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.devexpress.com/FZootNGhKM3t6YkYWlud8VN2VtHlyqsVUfFSjJBMweCOMRXkR5/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "net481": {
+            "framework": "net481",
+            "projectReferences": {
+              "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Module\\SampleJose.Module.csproj": {
+                "projectPath": "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Module\\SampleJose.Module.csproj"
+              }
+            }
+          }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net481": {
+          "framework": "net481",
+          "dependencies": {
+            "DevExpress.ExpressApp.CodeAnalysis": {
+              "target": "Package",
+              "version": "[24.2.6, )"
+            }
+          }
+        }
+      }
+    },
+    "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Module\\SampleJose.Module.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Module\\SampleJose.Module.csproj",
+        "projectName": "SampleJose.Module",
+        "projectPath": "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Module\\SampleJose.Module.csproj",
+        "packagesPath": "C:\\Users\\steve\\.nuget\\packages\\",
+        "outputPath": "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Module\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "UsingMicrosoftNETSdk": false,
+        "fallbackFolders": [
+          "C:\\Program Files\\DevExpress 22.1\\Components\\Offline Packages",
+          "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages",
+          "C:\\Program Files\\DevExpress 24.2\\Components\\Offline Packages",
+          "C:\\Program Files\\DevExpress 25.1\\Components\\Offline Packages",
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\steve\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.1.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.1.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 24.2.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 25.1.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net481"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\DevExpress 22.1\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files\\DevExpress 23.1\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files\\DevExpress 24.2\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files\\DevExpress 25.1\\Components\\System\\Components\\Packages": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.devexpress.com/FZootNGhKM3t6YkYWlud8VN2VtHlyqsVUfFSjJBMweCOMRXkR5/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "net481": {
+            "framework": "net481",
+            "projectReferences": {}
+          }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net481": {
+          "framework": "net481",
+          "dependencies": {
+            "DevExpress.ExpressApp.CodeAnalysis": {
+              "target": "Package",
+              "version": "[24.2.6, )"
+            }
+          }
+        }
+      }
+    },
+    "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Web\\SampleJose.Web.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Web\\SampleJose.Web.csproj",
+        "projectName": "SampleJose.Web",
+        "projectPath": "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Web\\SampleJose.Web.csproj",
+        "packagesPath": "C:\\Users\\steve\\.nuget\\packages\\",
+        "outputPath": "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Web\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "UsingMicrosoftNETSdk": false,
+        "fallbackFolders": [
+          "C:\\Program Files\\DevExpress 22.1\\Components\\Offline Packages",
+          "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages",
+          "C:\\Program Files\\DevExpress 24.2\\Components\\Offline Packages",
+          "C:\\Program Files\\DevExpress 25.1\\Components\\Offline Packages",
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\steve\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.1.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.1.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 24.2.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 25.1.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net481"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\DevExpress 22.1\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files\\DevExpress 23.1\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files\\DevExpress 24.2\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files\\DevExpress 25.1\\Components\\System\\Components\\Packages": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.devexpress.com/FZootNGhKM3t6YkYWlud8VN2VtHlyqsVUfFSjJBMweCOMRXkR5/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "net481": {
+            "framework": "net481",
+            "projectReferences": {
+              "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Module.Web\\SampleJose.Module.Web.csproj": {
+                "projectPath": "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Module.Web\\SampleJose.Module.Web.csproj"
+              },
+              "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Module\\SampleJose.Module.csproj": {
+                "projectPath": "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Module\\SampleJose.Module.csproj"
+              }
+            }
+          }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net481": {
+          "framework": "net481",
+          "dependencies": {
+            "DevExpress.ExpressApp.CodeAnalysis": {
+              "target": "Package",
+              "version": "[24.2.6, )"
+            }
+          }
+        }
+      }
+    }
+  }
+}

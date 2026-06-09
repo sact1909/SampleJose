@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "F4Jj8NrK0EA=",
+  "success": true,
+  "projectFilePath": "D:\\TestRepos\\Jose\\SampleJose\\SampleJose.Web\\SampleJose.Web.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\steve\\.nuget\\packages\\devexpress.expressapp.codeanalysis\\24.2.6\\devexpress.expressapp.codeanalysis.24.2.6.nupkg.sha512"
+  ],
+  "logs": []
+}
