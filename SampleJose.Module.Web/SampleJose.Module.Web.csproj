@@ -143,6 +143,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ProductsConnectedUsersController.cs" />
     <Compile Include="WebModule.cs">
       <SubType>Component</SubType>
     </Compile>
