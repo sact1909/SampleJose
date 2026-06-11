@@ -1,9 +1,9 @@
 (function () {
     'use strict';
 
-    var BAR_ID      = 'products-users-bar';
-    var AVATARS_ID  = 'products-avatars';
-    var STATUS_ID   = 'products-signalr-status';
+    var BAR_ID     = 'products-users-bar';
+    var AVATARS_ID = 'products-avatars';
+    var STATUS_ID  = 'products-signalr-status';
 
     var COLORS = [
         '#e74c3c','#e67e22','#f1c40f','#2ecc71','#1abc9c',
@@ -58,6 +58,11 @@
             document.querySelector('.dxgvControl')     ||
             document.body;
         container.insertBefore(createBar(), container.firstChild);
+    }
+
+    function removeBar() {
+        var bar = document.getElementById(BAR_ID);
+        if (bar) bar.parentNode.removeChild(bar);
     }
 
     function setStatus(msg) {
@@ -152,26 +157,24 @@
         }
     }
 
-    /* ---- SignalR ---- */
-    function waitForSignalR(callback, attempts) {
-        attempts = attempts || 0;
-        if (attempts > 40) { setStatus('SignalR no disponible'); return; }
-        if (typeof $ !== 'undefined' && $.connection && $.connection.productsHub) {
-            callback();
-        } else {
-            setTimeout(function () { waitForSignalR(callback, attempts + 1); }, 250);
-        }
-    }
-
-    function startHub() {
+    /* ---- SignalR hub wiring ---- */
+    function wireHub() {
         var hub = $.connection.productsHub;
-
         hub.client.updateUsers = function (users) {
             renderUsers(users);
         };
+    }
 
+    function startConnection(onDone) {
+        if ($.connection.hub.state === $.signalR.connectionState.connected) {
+            if (onDone) onDone();
+            return;
+        }
         $.connection.hub.start()
-            .done(function () { setStatus('En vivo ●'); })
+            .done(function () {
+                setStatus('En vivo ●');
+                if (onDone) onDone();
+            })
             .fail(function () { setStatus('Sin conexión'); });
 
         $.connection.hub.disconnected(function () {
@@ -182,14 +185,49 @@
         });
     }
 
-    function init() {
-        injectBar();
-        waitForSignalR(startHub);
+    function stopConnection() {
+        if (typeof $.connection !== 'undefined' &&
+            $.connection.hub.state !== $.signalR.connectionState.disconnected) {
+            $.connection.hub.stop();
+        }
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
+    /* ---- load scripts on demand, once ---- */
+    function ensureScriptsLoaded(callback) {
+        if (typeof $.connection !== 'undefined' && $.connection.productsHub) {
+            callback();
+            return;
+        }
+
+        function loadHubs() {
+            $.getScript('/signalr/hubs', function () {
+                wireHub();
+                callback();
+            });
+        }
+
+        if (typeof $.connection !== 'undefined') {
+            loadHubs();
+        } else {
+            $.getScript('/Scripts/jquery.signalR-2.4.3.min.js', loadHubs);
+        }
     }
+
+    /* ---- public API called by XAF controller via RegisterStartupScript ---- */
+    window.productsHub_connect = function () {
+        if (typeof $ === 'undefined') {
+            setTimeout(window.productsHub_connect, 150);
+            return;
+        }
+        injectBar();
+        ensureScriptsLoaded(function () {
+            startConnection();
+        });
+    };
+
+    window.productsHub_disconnect = function () {
+        removeBar();
+        stopConnection();
+    };
+
 })();
