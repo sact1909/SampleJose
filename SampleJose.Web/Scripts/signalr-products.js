@@ -22,6 +22,8 @@
         return name.substring(0, 2).toUpperCase();
     }
 
+    /* ==================== BAR ==================== */
+
     function createBar() {
         var bar = document.createElement('div');
         bar.id = BAR_ID;
@@ -70,7 +72,8 @@
         if (el) el.textContent = msg;
     }
 
-    /* ---- tooltip ---- */
+    /* ==================== TOOLTIP ==================== */
+
     var _tooltip = null;
 
     function getTooltip() {
@@ -108,7 +111,8 @@
         tip.style.display = 'none';
     }
 
-    /* ---- avatar ---- */
+    /* ==================== AVATAR ==================== */
+
     function makeAvatar(name) {
         var av = document.createElement('div');
         av.style.cssText = [
@@ -146,7 +150,6 @@
         return av;
     }
 
-    /* ---- render lista ---- */
     function renderUsers(users) {
         var container = document.getElementById(AVATARS_ID);
         if (!container) return;
@@ -157,11 +160,138 @@
         }
     }
 
-    /* ---- SignalR hub wiring ---- */
+    /* ==================== REMOTE CURSORS ==================== */
+
+    // Map of connectionId -> cursor DOM element
+    var _cursors = {};
+
+    // Build SVG cursor + label
+    function buildCursorEl(name) {
+        var color = colorForName(name);
+        var wrap = document.createElement('div');
+        wrap.style.cssText = [
+            'position:fixed',
+            'top:0',
+            'left:0',
+            'pointer-events:none',
+            'z-index:99999',
+            'will-change:transform',
+            'transition:transform 80ms linear',
+            'font-family:Arial,sans-serif'
+        ].join(';');
+
+        // SVG arrow cursor
+        var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('width', '24');
+        svg.setAttribute('height', '24');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.style.cssText = 'display:block;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.4))';
+
+        var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', 'M4 2 L4 18 L8 14 L12 22 L14 21 L10 13 L16 13 Z');
+        path.setAttribute('fill', color);
+        path.setAttribute('stroke', '#fff');
+        path.setAttribute('stroke-width', '1.2');
+        svg.appendChild(path);
+
+        // Name label
+        var label = document.createElement('div');
+        label.textContent = name;
+        label.style.cssText = [
+            'position:absolute',
+            'top:18px',
+            'left:14px',
+            'background:' + color,
+            'color:#fff',
+            'padding:2px 7px',
+            'border-radius:10px',
+            'font-size:11px',
+            'font-weight:600',
+            'white-space:nowrap',
+            'box-shadow:0 1px 4px rgba(0,0,0,0.35)',
+            'letter-spacing:0.3px'
+        ].join(';');
+
+        wrap.appendChild(svg);
+        wrap.appendChild(label);
+        return wrap;
+    }
+
+    function getOrCreateCursor(connectionId, name) {
+        if (!_cursors[connectionId]) {
+            var el = buildCursorEl(name);
+            document.body.appendChild(el);
+            _cursors[connectionId] = el;
+        }
+        return _cursors[connectionId];
+    }
+
+    function moveCursor(connectionId, name, x, y) {
+        var el = getOrCreateCursor(connectionId, name);
+        // x/y are percentages of viewport (0-100) so it stays consistent across scroll/resize
+        var px = (x / 100) * window.innerWidth;
+        var py = (y / 100) * window.innerHeight;
+        el.style.transform = 'translate(' + px + 'px,' + py + 'px)';
+    }
+
+    function removeCursor(connectionId) {
+        if (_cursors[connectionId]) {
+            document.body.removeChild(_cursors[connectionId]);
+            delete _cursors[connectionId];
+        }
+    }
+
+    function removeAllCursors() {
+        for (var id in _cursors) {
+            if (_cursors.hasOwnProperty(id)) {
+                if (_cursors[id].parentNode) _cursors[id].parentNode.removeChild(_cursors[id]);
+            }
+        }
+        _cursors = {};
+    }
+
+    /* ==================== MOUSE TRACKING ==================== */
+
+    var _mouseMoveHandler = null;
+    var _lastSent = 0;
+    var THROTTLE_MS = 50; // send at most 20 times/second
+
+    function startMouseTracking(hub) {
+        if (_mouseMoveHandler) return; // already tracking
+        _mouseMoveHandler = function (e) {
+            var now = Date.now();
+            if (now - _lastSent < THROTTLE_MS) return;
+            _lastSent = now;
+            // Send as percentage of viewport so remote side is resolution-independent
+            var xPct = (e.clientX / window.innerWidth)  * 100;
+            var yPct = (e.clientY / window.innerHeight) * 100;
+            hub.server.updateCursor(xPct, yPct);
+        };
+        document.addEventListener('mousemove', _mouseMoveHandler);
+    }
+
+    function stopMouseTracking() {
+        if (_mouseMoveHandler) {
+            document.removeEventListener('mousemove', _mouseMoveHandler);
+            _mouseMoveHandler = null;
+        }
+    }
+
+    /* ==================== SignalR Wiring ==================== */
+
     function wireHub() {
         var hub = $.connection.productsHub;
+
         hub.client.updateUsers = function (users) {
             renderUsers(users);
+        };
+
+        hub.client.moveCursor = function (connectionId, name, x, y) {
+            moveCursor(connectionId, name, x, y);
+        };
+
+        hub.client.removeCursor = function (connectionId) {
+            removeCursor(connectionId);
         };
     }
 
@@ -173,14 +303,20 @@
         $.connection.hub.start()
             .done(function () {
                 setStatus('En vivo ●');
+                startMouseTracking($.connection.productsHub);
                 if (onDone) onDone();
             })
             .fail(function () { setStatus('Sin conexión'); });
 
         $.connection.hub.disconnected(function () {
             setStatus('Reconectando...');
+            removeAllCursors();
+            stopMouseTracking();
             setTimeout(function () {
-                $.connection.hub.start().done(function () { setStatus('En vivo ●'); });
+                $.connection.hub.start().done(function () {
+                    setStatus('En vivo ●');
+                    startMouseTracking($.connection.productsHub);
+                });
             }, 5000);
         });
     }
@@ -188,11 +324,14 @@
     function stopConnection() {
         if (typeof $.connection !== 'undefined' &&
             $.connection.hub.state !== $.signalR.connectionState.disconnected) {
+            stopMouseTracking();
+            removeAllCursors();
             $.connection.hub.stop();
         }
     }
 
-    /* ---- load scripts on demand, once ---- */
+    /* ==================== SCRIPT LOADER ==================== */
+
     function ensureScriptsLoaded(callback) {
         if (typeof $.connection !== 'undefined' && $.connection.productsHub) {
             callback();
@@ -213,7 +352,8 @@
         }
     }
 
-    /* ---- public API called by XAF controller via RegisterStartupScript ---- */
+    /* ==================== PUBLIC API ==================== */
+
     window.productsHub_connect = function () {
         if (typeof $ === 'undefined') {
             setTimeout(window.productsHub_connect, 150);

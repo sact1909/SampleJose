@@ -20,6 +20,8 @@ namespace SampleJose.Web.Hubs {
 
         public override Task OnDisconnected(bool stopCalled) {
             _users.TryRemove(Context.ConnectionId, out _);
+            // Notify others to remove this user's cursor
+            Clients.Others.removeCursor(Context.ConnectionId);
             BroadcastUsers();
             return base.OnDisconnected(stopCalled);
         }
@@ -29,6 +31,12 @@ namespace SampleJose.Web.Hubs {
             _users[Context.ConnectionId] = name;
             BroadcastUsers();
             return base.OnReconnected();
+        }
+
+        // Called by clients to broadcast their cursor position
+        public void UpdateCursor(double x, double y) {
+            var name = _users.TryGetValue(Context.ConnectionId, out var n) ? n : "Anónimo";
+            Clients.Others.moveCursor(Context.ConnectionId, name, x, y);
         }
 
         private void BroadcastUsers() {

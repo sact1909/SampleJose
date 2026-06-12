@@ -24,7 +24,7 @@ namespace SampleJose.Module.Web.Controllers {
         void Window_PagePreRender(object sender, EventArgs _) {
             var window = (WebWindow)sender;
 
-            if (IsProductsListView(Frame.View)) {
+            if (IsProductsDetailListView(Frame.View)) {
                 // If scripts already loaded just connect, otherwise load then connect.
                 // The guard window.__productsScriptReady prevents double-loading across AJAX callbacks.
                 const string script = @"
@@ -49,8 +49,8 @@ namespace SampleJose.Module.Web.Controllers {
             }
         }
 
-        static bool IsProductsListView(View view) {
-            return view is ListView lv
+        static bool IsProductsDetailListView(View view) {
+            return view is DetailView lv
                 && lv.ObjectTypeInfo != null
                 && lv.ObjectTypeInfo.Type == typeof(Product);
         }
